@@ -1,0 +1,25 @@
+-- This is the model of a garbage robot
+-- It's a garbage can that can be called from different sites
+-- have a lid that opens to collect garbage
+
+
+MODULE room
+	VAR
+        -- on: if the button was pressed to call the robot
+        -- blinking: if the robot arrive to the room and is working
+        -- off: otherwise I mean if nobody has called the robot
+		room_button: {on, blinking, off};
+		robot_button: boolean;
+	ASSIGN
+		init(room_button) := off;
+		init(robot_button) := FALSE;
+
+MODULE garbage_robot(robot,room)
+	VAR
+		location: {at1, btw12, at2, btw23, at3};
+		--lid: {open, closed};
+		moving: boolean;
+		direction: {forward, backward};
+		sensor: boolean;
+		-- counter for the sensor & lid coordination:
+		counter: 0..2;
