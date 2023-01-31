@@ -52,5 +52,5 @@ VAR
 	robot: garbage_robot(room1.robot_button,room1.room_button);
 
 
-LTLSPEC G((room.robot_button)->F(robot.location=atRoom01));
+LTLSPEC G((room1.robot_button)->F(robot.location = atRoom01));
 
