@@ -18,14 +18,9 @@ MODULE garbage_robot(on_robot,off_robot)
 		location: {atRoom01, between1_2, atRoom02};
 		moving: boolean;
 		direction: {forward, backward};
-		sensor: boolean;
-		counter: 0..2;
 	ASSIGN
-		init(counter) := 0;
 		init(location) := atRoom01;
-		--init(lid) := closed;
 		init(moving) := FALSE;
-		init(sensor) := FALSE;
 
 	next(moving) :=
 		case
@@ -55,3 +50,7 @@ MODULE main
 VAR
 	room1: room;
 	robot: garbage_robot(room1.robot_button,room1.room_button);
+
+
+LTLSPEC G((room.robot_button)->F(robot.location=atRoom01));
+
