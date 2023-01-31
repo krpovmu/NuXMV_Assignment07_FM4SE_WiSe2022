@@ -2,7 +2,6 @@
 -- It's a garbage can that can be called from different sites
 -- have a lid that opens to collect garbage
 
-
 MODULE room
 	VAR
         -- on: if the button was pressed to call the robot
@@ -14,12 +13,48 @@ MODULE room
 		init(room_button) := off;
 		init(robot_button) := FALSE;
 
-MODULE garbage_robot(robot,room)
+MODULE garbage_robot(on_robot,off_robot)
 	VAR
-		location: {at1, btw12, at2, btw23, at3};
+		--location: {at1, btw12, at2, btw23, at3};
+		location: {atRoom01, between1_2, atRoom02};
 		--lid: {open, closed};
 		moving: boolean;
 		direction: {forward, backward};
 		sensor: boolean;
 		-- counter for the sensor & lid coordination:
 		counter: 0..2;
+	ASSIGN
+		init(counter) := 0;
+		init(location) := atRoom01;
+		--init(lid) := closed;
+		init(moving) := FALSE;
+		init(sensor) := FALSE;
+
+	next(moving) :=
+		case
+			!(on_robot) : FALSE;
+			(on_robot)&(location=between1_2)&(direction=forward) : FALSE;
+			(on_robot)&(location=between1_2)&(direction=backward) : FALSE;
+			(on_robot)&(location=atRoom01) : FALSE;
+			(on_robot)&(location=atRoom02) : FALSE;
+			TRUE : TRUE;
+		esac;
+
+	next(off_robot) :=
+		case
+			(moving)&(location=between1_2)&(direction=forward): on;
+			(moving) : blinking;
+			TRUE : off_robot;
+		esac;
+
+	next(on_robot) :=
+		case
+			(location=atRoom01)&(on_robot) : FALSE;
+			TRUE : on_robot;
+		esac;
+
+MODULE main
+
+VAR
+	room1: room;
+	robot: garbage_robot(room1.robot_button,room1.room_button);
