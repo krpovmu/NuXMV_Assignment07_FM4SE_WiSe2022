@@ -15,13 +15,10 @@ MODULE room
 
 MODULE garbage_robot(on_robot,off_robot)
 	VAR
-		--location: {at1, btw12, at2, btw23, at3};
 		location: {atRoom01, between1_2, atRoom02};
-		--lid: {open, closed};
 		moving: boolean;
 		direction: {forward, backward};
 		sensor: boolean;
-		-- counter for the sensor & lid coordination:
 		counter: 0..2;
 	ASSIGN
 		init(counter) := 0;
