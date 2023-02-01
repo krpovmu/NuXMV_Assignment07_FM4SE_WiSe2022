@@ -52,5 +52,11 @@ VAR
 	robot: garbage_robot(room1.robot_button,room1.room_button);
 
 
+-- =========== Requirements
+-- 1
 LTLSPEC G((room1.robot_button)->F(robot.location = atRoom01));
 
+
+
+-- 3
+LTLSPEC F(!(room1.robot_button)->(H(robot.moving)->O(room1.room_button=blinking)));
