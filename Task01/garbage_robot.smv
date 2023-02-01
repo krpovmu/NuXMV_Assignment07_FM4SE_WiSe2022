@@ -1,12 +1,9 @@
 -- This is the model of a garbage robot
--- It's a garbage can that can be called from different sites
--- have a lid that opens to collect garbage
+-- It's a garbage can that can be called
+-- from different sites 2 rooms for the exercises
 
 MODULE room
 	VAR
-        -- on: if the button was pressed to call the robot
-        -- blinking: if the robot arrive to the room and is working
-        -- off: otherwise I mean if nobody has called the robot
 		room_button: {on, blinking, off};
 		robot_button: boolean;
 	ASSIGN
@@ -51,15 +48,15 @@ VAR
 	room1: room;
 	robot: garbage_robot(room1.robot_button,room1.room_button);
 
-
 -- =========== Requirements ===========
--- 1 NL: Model is globally TRUE if the robot 1 button is activated, is there a state in
--- which the robot is in room 1
+-- 1 NL: Is it globally TRUE when the robot button is pressed that there is a state when
+-- the robot is in room number 1?
 LTLSPEC G((room1.robot_button)->F(robot.location = atRoom01));
 
--- 2 NL:
+-- 2 NL: Is it globally TRUE if the robot is in the room2 the next state the robot
+-- is not moving in the forward direction?
 LTLSPEC G((robot.location=atRoom02)->X((!robot.moving)U(robot.direction=forward)));
 
--- 3 NL: all of the above states in robot moves implies that in some state the light was
--- in a blink state if the activation button was set to off
+-- 3 NL: Exist a TRUE state when the robot was moving while the button was blinking when the robot
+-- button was OFF?
 LTLSPEC F(!(room1.robot_button)->(H(robot.moving)->O(room1.room_button=blinking)));
