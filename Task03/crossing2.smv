@@ -1,0 +1,20 @@
+MODULE main
+
+VAR
+  carsGo : boolean;
+  trainComing : boolean;
+  trainsGo : boolean;
+  ambulance : boolean;
+  
+ASSIGN
+  init(carsGo) := FALSE;
+  init(trainsGo) := FALSE;
+  next(carsGo) := next(ambulance);
+  next(trainsGo) := trainComing;
+
+
+LTLSPEC
+  G F trainComing -> G F trainsGo;
+
+LTLSPEC
+  G ! (carsGo & trainsGo);
