@@ -1,0 +1,29 @@
+
+LTLSPEC
+  G F carsGo;
+
+This is FALSE because the execution that satisfies G must be TRUE for all states, while the one that satisfies F must only be TRUE for some of the states, as the model has only one iteration it cannot be TRUE for all states for carGO in the counterexample can be seen that for state 1.1 carGO is TRUE but for state 1.2 is FALSE, which does not satisfy G since it must be TRUE for all states.
+
+This is the NuSMV result:
+
+-- specification  G ( F carsGo)  is false
+-- as demonstrated by the following execution sequence
+Trace Description: LTL Counterexample 
+Trace Type: Counterexample 
+  -> State: 1.1 <-
+    carsGo = TRUE
+    trainComing = FALSE
+    trainsGo = FALSE
+  -- Loop starts here
+  -> State: 1.2 <-
+    carsGo = FALSE
+    trainsGo = TRUE
+  -- Loop starts here
+  -> State: 1.3 <-
+  -> State: 1.4 <-
+
+
+
+
+
+
