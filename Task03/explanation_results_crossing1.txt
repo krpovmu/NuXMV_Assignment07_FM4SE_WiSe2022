@@ -1,6 +1,6 @@
 
-LTLSPEC
-  G F carsGo;
+
+Specification  G ( F carsGo)  is false
 
 This is FALSE because the execution that satisfies G must be TRUE for all states, while the one that satisfies F must only be TRUE for some of the states, as the model has only one iteration it cannot be TRUE for all states for carGO in the counterexample can be seen that for state 1.1 carGO is TRUE but for state 1.2 is FALSE, which does not satisfy G since it must be TRUE for all states.
 

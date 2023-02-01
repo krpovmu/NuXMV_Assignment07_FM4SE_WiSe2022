@@ -1,0 +1,25 @@
+
+Specification  G !(carsGo & trainsGo)  is false
+
+There are 3 states in which carGo and trainsGo can be TRUE which are in which the & operation is FALSE because it has a negation making the operation TRUE which satisfies G, but if you look at trace there is a counter example where if carGo and trainsGo are both TRUE the negation operation makes them FALSE making it not satisfy the G requirement.
+
+This is the NuSMV result:
+
+Trace Description: LTL Counterexample
+Trace Type: Counterexample
+  -> State: 1.1 <-
+    carsGo = FALSE
+    trainComing = FALSE
+    trainsGo = FALSE
+    ambulance = FALSE
+  -> State: 1.2 <-
+    carsGo = TRUE
+    trainComing = TRUE
+    ambulance = TRUE
+  -> State: 1.3 <-
+    trainComing = FALSE
+    trainsGo = TRUE
+  -- Loop starts here
+  -> State: 1.4 <-
+    trainsGo = FALSE
+  -> State: 1.5 <-
