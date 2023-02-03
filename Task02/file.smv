@@ -1,0 +1,25 @@
+MODULE main
+VAR
+    openFile : boolean;
+    fileWritten : boolean;
+ASSIGN
+    init(openFile) := FALSE;
+    init(fileWritten) := FALSE;
+next(openFile) := case
+    (openFile = FALSE) & (fileWritten = FALSE) : TRUE;
+    (openFile = TRUE) & (fileWritten = FALSE) : TRUE;
+    (openFile = FALSE) & (fileWritten = TRUE) : FALSE;
+    (openFile = TRUE) & (fileWritten = TRUE) : TRUE;
+    TRUE : openFile;
+    esac;
+next(fileWritten) := case
+    (openFile = FALSE) & (fileWritten = FALSE) : FALSE;
+    (openFile = TRUE) & (fileWritten = FALSE) : TRUE;
+    (openFile = FALSE) & (fileWritten = TRUE) : FALSE;
+    (openFile = TRUE) & (fileWritten = TRUE) : TRUE;
+    TRUE : fileWritten;
+esac;
+
+LTLSPEC TRUE U fileWritten
+--LTLSPEC (((X openFile U openFile) U X X openFile) V !((!truncate & fileWritten) xor X(FALSE))) U fileWritten
+

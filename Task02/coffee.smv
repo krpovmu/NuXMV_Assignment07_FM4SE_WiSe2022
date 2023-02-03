@@ -1,0 +1,26 @@
+MODULE main
+VAR
+    brewing : boolean;
+    depressure : boolean;
+    p1 : boolean;
+ASSIGN
+    init(brewing) := FALSE;
+    init(depressure) := FALSE;
+    init(p1) := FALSE;
+    next(brewing) := case
+    (brewing = FALSE) & (depressure = FALSE) : TRUE;
+    (brewing = TRUE) & (depressure = FALSE) : TRUE;
+    (brewing = FALSE) & (depressure = TRUE) : FALSE;
+    (brewing = TRUE) & (depressure = TRUE) : FALSE;
+    TRUE : brewing;
+esac;
+    next(depressure) := case
+    (brewing = FALSE) & (depressure = FALSE) : FALSE;
+    (brewing = TRUE) & (depressure = FALSE) : TRUE;
+    (brewing = FALSE) & (depressure = TRUE) : FALSE;
+    (brewing = TRUE) & (depressure = TRUE) : FALSE;
+    TRUE : depressure;
+esac;
+
+LTLSPEC X(brewing | G brewing) U depressure
+LTLSPEC F(FALSE V depressure) & (G depressure V !(depressure & !p1))

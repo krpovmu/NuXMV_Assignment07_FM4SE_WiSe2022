@@ -1,0 +1,19 @@
+MODULE traffic(other)
+VAR
+    state: {redlight,yellowlight,greenlight};
+ASSIGN
+    init(state) := redlight;
+    next(state) := case
+                   state=redlight & other=redlight : {redlight, yellowlight};
+                   state=yellowlight : greenlight;
+                   state=greenlight : {greenlight,redlight};
+                   TRUE: state;
+                esac;
+
+MODULE main
+VAR
+    tl1: process traffic(tl2.state);
+    tl2: process traffic(tl1.state);
+
+--LTLSPEC  TRUE U !F X(X(FALSE) V greenLight)
+--LTLSPEC G F! greenlight

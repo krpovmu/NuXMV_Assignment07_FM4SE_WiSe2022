@@ -93,4 +93,4 @@ ASSIGN
 
 -- Some counterexamples based in the positions in the board
 LTLSPEC G((position = H7)->F(position = G4));
-LTLSPEC G((position = G1)->((position = E2)U(position = F3)));
+LTLSPEC ((position = G1)->((position = E2)|(position = F3)));

@@ -1,0 +1,30 @@
+MODULE thread(y)
+
+VAR
+    location: {noncritical, wait, critical, exit};
+
+ASSIGN
+	init(location) := noncritical;
+	next(location) := case
+			location = noncritical : {noncritical, wait};
+			location = wait & y>0: critical;
+			location = critical : {critical, exit};
+			location = exit : noncritical;
+			TRUE: location;
+			esac;
+
+	next(y) := case
+		location = wait & y>0: y - 1;
+		location = exit & y=0: y+1;
+		TRUE: y;
+		esac;
+
+MODULE main
+
+VAR
+	ymain: 0..1;
+	prg1: process thread(ymain);
+	prg2: process thread(ymain);
+		
+ASSIGN
+	init(ymain) := 1;
